@@ -19,11 +19,16 @@ module.exports = function toReadable(number) {
         readableNumber = digitToReadable(number)
     }
 
-    if (number > 9 && number < 20) {
-        readableNumber = secondDevisionToReadable(numberToString[numberLenth - 1])
-    }
-    else if (number > 9) {
-        readableNumber = decadesToReadable(numberToString[numberLenth - 2]) + ' ' + digitToReadable(numberToString[numberLenth - 1])
+    const isMoreThanNine = number > 9;
+    const isSecondDigitOne = numberToString[(numberLenth - 2)] === "1";
+
+    if (isMoreThanNine) {
+        if (isSecondDigitOne) {
+            readableNumber = secondDevisionToReadable(numberToString[numberLenth - 1])
+        }
+        else {
+            readableNumber = decadesToReadable(numberToString[numberLenth - 2]) + ' ' + digitToReadable(numberToString[numberLenth - 1])
+        }
     }
 
     if (number > 99) {
@@ -39,7 +44,7 @@ module.exports = function toReadable(number) {
         if (number > 9999 && numberToString[numberLenth - 5] === 1) {
             readableNumber = secondDevisionToReadable(numberLenth - 4) + ' thousand ' + readableNumber.trimStart();
         }
-        else {
+        else if (number > 9999) {
             readableNumber = decadesToReadable(numberToString[numberLenth - 5]) + ' ' + digitToReadable(numberToString[numberLenth - 4]) + ' thousand ' + readableNumber.trimStart();
         }
 
